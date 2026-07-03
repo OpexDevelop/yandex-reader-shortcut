@@ -279,17 +279,18 @@
         const cleanUrl = window.location.origin + window.location.pathname;
 
         if (!isYandexApp) {
+            const intentUrl = 'intent://' + window.location.host + window.location.pathname + '#Intent;scheme=https;package=com.yandex.searchapp;end';
             document.getElementById('content').innerHTML = `
                 <h2>Открыть в Яндексе</h2>
                 <p>Этот ярлык создается только через приложение Яндекс.</p>
                 <div class="link-box">${cleanUrl}</div>
                 <button class="btn" onclick="copyLink('${cleanUrl}', this)">Скопировать ссылку</button>
-                <a href="https://yandex.ru/all?mode=apps&service=searchapp" target="_blank" class="btn-secondary">
+                <a href="${intentUrl}" class="btn-secondary">
                     <svg class="icon" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
                         <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
                     </svg>
-                    <span>Скачать Яндекс</span>
+                    <span>Открыть в Яндексе</span>
                 </a>
             `;
             return;
