@@ -91,12 +91,41 @@
 
         .link-box {
             background: var(--block-bg);
-            padding: 16px;
+            padding: 14px 16px;
             border-radius: 20px;
             font-size: 13px;
             font-family: monospace;
             word-break: break-all;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            text-align: left;
+        }
+
+        .link-text {
+            flex-grow: 1;
+        }
+
+        .copy-btn {
+            background: none;
+            border: none;
+            padding: 4px;
+            cursor: pointer;
+            color: var(--text-dim);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            outline: none;
+            transition: opacity 0.15s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .icon-svg {
+            stroke: currentColor;
+            fill: none;
         }
 
         .btn {
@@ -118,39 +147,6 @@
 
         .btn:active {
             opacity: 0.8;
-        }
-
-        .btn-secondary {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            width: 100%;
-            background: var(--bg);
-            color: var(--text);
-            border: 1px solid var(--text-dim);
-            padding: 16px 24px;
-            border-radius: 99px;
-            font-size: 15px;
-            font-weight: 500;
-            cursor: pointer;
-            box-sizing: border-box;
-            text-decoration: none;
-            -webkit-tap-highlight-color: transparent;
-            outline: none;
-            margin-top: 12px;
-        }
-
-        .btn-secondary:active {
-            opacity: 0.8;
-        }
-
-        .icon {
-            width: 16px;
-            height: 16px;
-            stroke: currentColor;
-            display: inline-block;
-            vertical-align: middle;
         }
 
         ol {
@@ -211,14 +207,6 @@
             background: var(--input-focus);
         }
 
-        .or-separator {
-            display: block;
-            margin: 12px 0 0 0;
-            font-size: 13px;
-            color: var(--text-dim);
-            font-weight: 500;
-        }
-
         .github-link {
             display: inline-flex;
             align-items: center;
@@ -265,11 +253,20 @@
 <script>
     function copyLink(text, btnElement) {
         navigator.clipboard.writeText(text).then(() => {
-            btnElement.innerText = "Скопировано";
-            btnElement.style.opacity = "0.8"; 
+            btnElement.style.opacity = "0.5";
+            btnElement.innerHTML = `
+                <svg class="icon-svg" viewBox="0 0 24 24" width="16" height="16">
+                    <polyline points="20 6 9 17 4 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            `;
             setTimeout(() => {
-                btnElement.innerText = "Скопировать ссылку";
                 btnElement.style.opacity = "1";
+                btnElement.innerHTML = `
+                    <svg class="icon-svg" viewBox="0 0 24 24" width="16" height="16">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                `;
             }, 2000);
         });
     }
@@ -291,12 +288,16 @@
             document.getElementById('content').innerHTML = `
                 <h2>Требуется приложение Яндекс</h2>
                 <p>Этот ярлык создается только через приложение Яндекс.</p>
-                <div class="link-box">${cleanUrl}</div>
-                <button class="btn" onclick="copyLink('${cleanUrl}', this)">Скопировать ссылку</button>
-                <span class="or-separator">или</span>
-                <a href="${intentUrl}" class="btn-secondary">
-                    <span>Открыть в приложении Яндекс</span>
-                </a>
+                <div class="link-box">
+                    <span class="link-text">${cleanUrl}</span>
+                    <button class="copy-btn" onclick="copyLink('${cleanUrl}', this)">
+                        <svg class="icon-svg" viewBox="0 0 24 24" width="16" height="16">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+                <a href="${intentUrl}" class="btn">Открыть в приложении Яндекс</a>
             `;
             return;
         }
