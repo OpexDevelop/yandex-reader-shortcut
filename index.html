@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Читалка</title>
+    
+    <meta name="description" content="Удобный инструмент для создания ярлыка быстрого доступа к Яндекс Читалке на рабочем столе вашего телефона.">
+    <meta name="keywords" content="яндекс читалка, яндекс библиотека, ярлык на рабочий стол, яндекс читалка ярлык, books library, создать ярлык">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://opexdevelop.github.io/yandex-reader-shortcut/">
+    
+    <meta property="og:title" content="Ярлык для Яндекс Читалки">
+    <meta property="og:description" content="Быстрый запуск встроенной Читалки на рабочем столе в один клик.">
+    <meta property="og:url" content="https://opexdevelop.github.io/yandex-reader-shortcut/">
+    <meta property="og:type" content="website">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Ярлык для Яндекс Читалки">
+    <meta name="twitter:description" content="Быстрый запуск встроенной Читалки на рабочем столе в один клик.">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text: #000000;
+            --text-dim: rgba(0, 0, 0, 0.5);
+            --block-bg: rgba(0, 0, 0, 0.03);
+            --input-focus: rgba(0, 0, 0, 0.06);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #000000;
+                --text: #ffffff;
+                --text-dim: rgba(255, 255, 255, 0.5);
+                --block-bg: rgba(255, 255, 255, 0.05);
+                --input-focus: rgba(255, 255, 255, 0.08);
+            }
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100dvh;
+            overflow: hidden;
+            padding: 24px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 340px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .spinner {
+            width: 32px;
+            height: 32px;
+            border: 2px solid var(--text-dim);
+            border-top-color: var(--text);
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            animation: spin 0.8s infinite linear;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 0 0 16px 0;
+            letter-spacing: -0.5px;
+        }
+
+        p {
+            font-size: 15px;
+            line-height: 1.5;
+            color: var(--text-dim);
+            margin: 0 0 24px 0;
+        }
+
+        .link-box {
+            background: var(--block-bg);
+            padding: 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-family: monospace;
+            word-break: break-all;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            width: 100%;
+            background: var(--text);
+            color: var(--bg);
+            border: none;
+            padding: 16px 24px;
+            border-radius: 99px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            box-sizing: border-box;
+            text-decoration: none;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+        }
+
+        .btn:active {
+            opacity: 0.8;
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            background: var(--bg);
+            color: var(--text);
+            border: 1px solid var(--text-dim);
+            padding: 16px 24px;
+            border-radius: 99px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            box-sizing: border-box;
+            text-decoration: none;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+            margin-top: 12px;
+        }
+
+        .btn-secondary:active {
+            opacity: 0.8;
+        }
+
+        .icon {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        ol {
+            text-align: left;
+            padding-left: 20px;
+            margin: 0 0 24px 0;
+            color: var(--text-dim);
+            font-size: 15px;
+        }
+
+        ol li {
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+        
+        ol li b {
+            color: var(--text);
+        }
+
+        .footer-text {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text);
+            margin-top: 28px;
+            line-height: 1.4;
+        }
+
+        .input-group {
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 13px;
+            color: var(--text-dim);
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .input-field {
+            width: 100%;
+            box-sizing: border-box;
+            border: none;
+            background: var(--block-bg);
+            color: var(--text);
+            padding: 16px 20px;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            outline: none;
+            font-family: inherit;
+            transition: background-color 0.15s ease;
+        }
+
+        .input-field:focus {
+            background: var(--input-focus);
+        }
+
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 36px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.15s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .github-link:active {
+            color: var(--text);
+        }
+
+        .github-icon {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div id="content">
+            <div class="spinner"></div>
+            <h2>Запуск Читалки</h2>
+            <p>Подключаемся к приложению...</p>
+        </div>
+
+        <a href="https://github.com/OpexDevelop/yandex-reader-shortcut" target="_blank" class="github-link">
+            <svg class="github-icon" viewBox="0 0 16 16" width="14" height="14">
+                <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2.01.21.14.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+            </svg>
+            <span>OpexDevelop/yandex-reader-shortcut</span>
+        </a>
+    </div>
+
+<script>
+    function copyLink(text, btnElement) {
+        navigator.clipboard.writeText(text).then(() => {
+            btnElement.innerText = "Скопировано";
+            btnElement.style.opacity = "0.8"; 
+            setTimeout(() => {
+                btnElement.innerText = "Скопировать ссылку";
+                btnElement.style.opacity = "1";
+            }, 2000);
+        });
+    }
+
+    function updateTitle(val) {
+        document.title = val.trim() || "Читалка";
+    }
+
+    window.onload = function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const targetApp = "books://library"; 
+        const userAgent = navigator.userAgent.toLowerCase();
+        
+        const isYandexApp = userAgent.includes('yasearchapp');
+        const cleanUrl = window.location.origin + window.location.pathname;
+
+        if (!isYandexApp) {
+            document.getElementById('content').innerHTML = `
+                <h2>Открыть в Яндексе</h2>
+                <p>Этот ярлык создается только через приложение Яндекс.</p>
+                <div class="link-box">${cleanUrl}</div>
+                <button class="btn" onclick="copyLink('${cleanUrl}', this)">Скопировать ссылку</button>
+                <a href="https://yandex.ru/all?mode=apps&service=searchapp" target="_blank" class="btn-secondary">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                    </svg>
+                    <span>Скачать Яндекс</span>
+                </a>
+            `;
+            return;
+        }
+
+        if (urlParams.has('shortcut')) {
+            window.location.href = targetApp;
+        } 
+        else {
+            window.history.replaceState(null, '', window.location.pathname + '?shortcut');
+            
+            document.getElementById('content').innerHTML = `
+                <h2>Создание ярлыка</h2>
+                <div class="input-group">
+                    <label class="input-label">Назовите ярлык:</label>
+                    <input type="text" class="input-field" value="Читалка" oninput="updateTitle(this.value)">
+                </div>
+                <ol>
+                    <li>Нажмите на <b>три точки</b> в углу экрана.</li>
+                    <li>Выберите <b>«Добавить на главный экран»</b>.</li>
+                </ol>
+                <div class="footer-text">Теперь вы можете открывать Читалку с рабочего стола!</div>
+            `;
+        }
+    };
+</script>
+
+</body>
+</html>
