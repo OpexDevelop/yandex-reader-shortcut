@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://opexdevelop.github.io/yandex-reader-shortcut/sitemap.xml
